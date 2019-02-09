@@ -1,4 +1,4 @@
-// const _ = require('lodash');
+const _ = require('lodash');
 
 function numberOfFolds(gameState) {
   const { players, in_action } = gameState;
