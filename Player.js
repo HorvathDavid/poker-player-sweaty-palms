@@ -24,8 +24,110 @@ function getAllCards(player, gameState) {
   return [...hole_cards, ...community_cards];
 }
 
-function callValue(player, current_buy_in) {
-  return current_buy_in - player['bet'];
+function whichGroup(cards) {
+
+  // "hole_cards": [                         // The cards of the player. This is only visible for your own player
+  //   //     except after showdown, when cards revealed are also included.
+  //   {
+  //     "rank": "6",                    // Rank of the card. Possible values are numbers 2-10 and J,Q,K,A
+  //     "suit": "hearts"                // Suit of the card. Possible values are: clubs,spades,hearts,diamonds
+  //   },
+  //   {
+  //     "rank": "K",
+  //     "suit": "spades"
+  //   }
+  // ]
+
+  const ourCards = cards.map(c => c.rank);
+
+  let group = 0;
+
+  const g1 = {
+    norm: [
+      ['A', 'A'],
+      ['K', 'K'],
+      ['Q', 'Q'],
+      ['J', 'J']
+    ],
+    suited: [['A', 'K']]
+  };
+
+  const g2 = {
+    norm: [
+      ['10', '10'],
+      ['A', 'K']
+    ],
+    suited: [
+      ['A', 'Q'],
+      ['A', 'J'],
+      ['Q', 'K']
+    ]
+  };
+
+  const g3 = {
+    norm: [
+      ['9', '9'],
+      ['A', 'Q']
+    ],
+    suited: [
+      ['J', '10'],
+      ['Q', 'J'],
+      ['K', 'J'],
+      ['A', '10']
+    ]
+  };
+
+  const g4 = {
+    norm: [
+      ['K', 'Q'],
+      ['8', '8'],
+      ['K', '10'],
+      ['J', 'A'],
+      ['J', 'A']
+    ],
+    suited: [
+      ['10', '9'],
+      ['K', '10'],
+      ['9', '8'],
+      ['J', '9'],
+    ]
+  };
+
+  if (ourCards) {
+    // check g1
+    for (const pairs of g1.norm) {
+      if (JSON.stringify(pairs.sort()) === JSON.stringify(ourCards.sort())) {
+        group = 1;
+        return group;
+      }
+    }
+
+    // check g2
+    for (const pairs of g2.norm) {
+      if (JSON.stringify(pairs.sort()) === JSON.stringify(ourCards.sort())) {
+        group = 2;
+        return group;
+      }
+    }
+
+    // check g3
+    for (const pairs of g3.norm) {
+      if (JSON.stringify(pairs.sort()) === JSON.stringify(ourCards.sort())) {
+        group = 3;
+        return group;
+      }
+    }
+
+    // check g4
+    for (const pairs of g4.norm) {
+      if (JSON.stringify(pairs.sort()) === JSON.stringify(ourCards.sort())) {
+        group = 4;
+        return group;
+      }
+    }
+  }
+
+  return group;
 }
 
 class Player {
@@ -45,45 +147,13 @@ class Player {
     } = gameState;
     let betValue = 0;
 
-    const tempCards = ['10', 'J', 'Q', 'K', 'A'];
-
-    // const g1 = ['A', 'A']
-    // const g1 = ['K', 'K']
-    // const g1 = ['Q', 'Q']
-    // const g1 = ['J', 'J']
-    // const gc1 = ['A', 'K'] // color
-
-    // const g2 = ['10', '10']
-    // const g2 = ['A', 'Q'] // suited
-    // const g2 = ['A', 'J']  // suited
-    // const g2 = ['Q', 'K'] // suited
-    // const g2 = ['A', 'K']
-
-    // const g3 = ['9', '9']
-    // const g3 = ['J', '10'] // suited
-    // const g3 = ['Q', 'J']  // suited
-    // const g3 = ['K', 'J'] // suited
-    // const g3 = ['A', '10'] // suited
-    // const g3 = ['A', 'Q']
-
-    // const g4 = ['10', '9'] // suited
-    // const g4 = ['K', 'Q'] 
-    // const g4 = ['8', '8'] 
-    // const g4 = ['K', '10'] // suited
-    // const g4 = ['K', '10']
-    // const g4 = ['9', '8'] // suited
-    // const g4 = ['J', '9'] //suited
-    // const g4 = ['J', 'A'] 
-    // const g4 = ['J', 'A'] 
-
-
-
     const player = getOwnPlayer(gameState);
     const ourCards = player.hole_cards;
-
     const allCards = getAllCards(player, gameState);
-    // const callVal = callValue(player, current_buy_in);
     const _isPair = isPair(gameState, player);
+
+    const tempCards = ['10', 'J', 'Q', 'K', 'A'];
+
     try {
       if (tempCards.includes(ourCards[0].rank) && tempCards.includes(ourCards[1].rank)) {
         betValue = current_buy_in - player.bet + minimum_raise;
