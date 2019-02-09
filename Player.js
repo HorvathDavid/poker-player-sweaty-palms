@@ -11,6 +11,7 @@ function isPair(gameState) {
 }
 
 function getOwnPlayer(gameState) {
+  const id = gameState.in_action;
   return gameState.players.filter(player => {
     return player.id === id;
   })[0];
@@ -65,11 +66,11 @@ class Player {
 
     const player = getOwnPlayer(gameState);
 
-    try {
-
     const allCards = getAllCards(player, gameState);
     const callValue = callValue(player, current_buy_in);
     const _isPair = isPair(gameState);
+    try {
+
 
       if (tempCards.includes(ourCards[0].rank) && tempCards.includes(ourCards[1].rank)) {
         betValue = current_buy_in - player.bet + minimum_raise;
