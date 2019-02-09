@@ -1,4 +1,4 @@
-// const _ = require('lodash');
+const _ = require('lodash');
 
 function numberOfFolds(gameState) {
   const { players, in_action } = gameState;
@@ -314,30 +314,30 @@ class Player {
     const allCards = getAllCards(player, gameState);
     const _isPair = isPair(gameState, player);
 
-    // if (allCards.length > 2) {
-    //   // 2 pair
-    //   // 3 egyforma
-    //   const grouped = _.groupBy(allCards, function (o) {
-    //     return o.rank;
-    //   });
+    if (allCards.length > 2) {
+      // 2 pair
+      // 3 egyforma
+      const grouped = _.groupBy(allCards, function (o) {
+        return o.rank;
+      });
       
-    //   let maxOfSame = 0;
-    //   for (const key of Object.keys(grouped)) {
-    //     if (grouped[key].length > maxOfSame) { 
-    //       maxOfSame = grouped[key].length;
-    //     }
-    //   }
+      let maxOfSame = 0;
+      for (const key of Object.keys(grouped)) {
+        if (grouped[key].length > maxOfSame) { 
+          maxOfSame = grouped[key].length;
+        }
+      }
       
-    //   // console.log(maxOfSame)
+      // console.log(maxOfSame)
       
 
-    //   if (maxOfSame > 2) {
-    //     betValue = player.stack;
-    //     // console.log('same cards:', maxOfSame)
-    //     // console.log('betValue', betValue);
-    //     return betCallback(Math.floor(betValue));
-    //   }
-    // }
+      if (maxOfSame > 2) {
+        betValue = player.stack;
+        // console.log('same cards:', maxOfSame)
+        // console.log('betValue', betValue);
+        return betCallback(Math.floor(betValue));
+      }
+    }
 
     // console.log('no same cards');
 

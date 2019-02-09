@@ -9,6 +9,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "1.15.2",
-    "express": "4.x"
+    "express": "4.x",
+    "lodash": "^4.17.11"
   }
 }
