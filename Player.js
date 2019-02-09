@@ -6,8 +6,9 @@ function numberOfFolds(gameState) {
 }
 
 function numberOfBetOnOtherPlayers(gameState) {
-  const { players, in_action } = gameState;
-  return players.filter(e => e.bet > 0 && in_action !== e.id).length;
+  const { players, in_action, small_blind } = gameState;
+
+  return players.filter(e => e.bet > (2 * small_blind) && in_action !== e.id).length;
 }
 
 function ourPosition(gameState) {
@@ -302,7 +303,6 @@ class Player {
       small_blind,
       minimum_raise,
       pot,
-      community_cards
     } = gameState;
 
     let betValue = 0;
@@ -311,6 +311,10 @@ class Player {
     const ourCards = player.hole_cards;
     const allCards = getAllCards(player, gameState);
     const _isPair = isPair(gameState, player);
+
+    // if (allCards.length > ) {
+
+    // }
 
     const group = whichGroup(ourCards);
     const ourPos = ourPosition(gameState);
