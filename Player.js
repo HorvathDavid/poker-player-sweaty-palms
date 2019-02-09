@@ -197,6 +197,8 @@ class Player {
     const allCards = getAllCards(player, gameState);
     const _isPair = isPair(gameState, player);
 
+    const group = whichGroup(ourCards);    
+
     const tempCards = ['10', 'J', 'Q', 'K', 'A'];
 
     try {
