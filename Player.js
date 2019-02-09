@@ -1,4 +1,8 @@
 
+function howManyRaiseHappendedInRoundBefore(gameState) {
+  
+}
+
 function ourPosition(gameState) {
   const { dealer, players, in_action } = gameState;
   let dealerPlayer = (dealer + 1) % (players.length);
@@ -142,6 +146,11 @@ function whichGroup(cards) {
       ['9', '8'],
       ['J', '9'],
     ]
+  };
+
+  const g5 = {
+    norm: [],
+    suited: []
   };
 
   if (ourCards) {
