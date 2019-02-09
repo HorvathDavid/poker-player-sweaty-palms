@@ -43,21 +43,25 @@ class Player {
       community_cards
     } = gameState;
     let betValue = 0;
-
     let tempCards = ['10', 'J', 'Q', 'K', 'A'];
     const player = getOwnPlayer(gameState);
+
 
     const allCards = getAllCards(player, gameState);
     const callValue = callValue(player, current_buy_in);
     const _isPair = isPair(gameState);
 
+    try {
+      if (tempCards.includes(ourCards[0].rank) && tempCards.includes(ourCards[1].rank)) {
+        betValue = current_buy_in - player.bet + minimum_raise;
+      }
 
-    if (tempCards.includes(ourCards[0].rank) && tempCards.includes(ourCards[1].rank)) {
-      betValue = current_buy_in - players.find(obj => obj.id == ourID).bet + minimum_raise;
-    }
+      if (_isPair) {
+        betValue = current_buy_in - player.bet + minimum_raise;
+      }
 
-    if (_isPair) {
-      betValue = current_buy_in - players.find(obj => obj.id == ourID).bet + minimum_raise;
+    } catch (error) {
+      console.log(error);
     }
 
     betCallback(Math.floor(betValue));
