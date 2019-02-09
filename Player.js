@@ -79,13 +79,12 @@ class Player {
 
 
     const player = getOwnPlayer(gameState);
+    const ourCards = player.hole_cards;
 
     const allCards = getAllCards(player, gameState);
     // const callVal = callValue(player, current_buy_in);
     const _isPair = isPair(gameState, player);
     try {
-
-
       if (tempCards.includes(ourCards[0].rank) && tempCards.includes(ourCards[1].rank)) {
         betValue = current_buy_in - player.bet + minimum_raise;
       }
