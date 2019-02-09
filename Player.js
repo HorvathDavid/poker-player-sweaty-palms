@@ -209,6 +209,12 @@ class Player {
 
       if (act === "raise") {
         betValue = current_buy_in - player.bet + minimum_raise;
+        // Ha betValue > pot/2, akkor fold - nem adjuk meg az all-int
+        if (betValue > pot/2) {
+          if (group !== 1) {
+            betValue = 0;
+          } 
+        }
       }
       // if (tempCards.includes(ourCards[0].rank) && tempCards.includes(ourCards[1].rank)) {
       //   betValue = current_buy_in - player.bet + minimum_raise;
