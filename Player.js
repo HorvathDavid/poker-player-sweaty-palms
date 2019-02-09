@@ -14,6 +14,36 @@ function ourPosition(gameState) {
   return position;
 }
 
+function decision(group, pos) {
+  let action = "fold";
+  if (group > 4) {
+      action = "fold";
+  } else if (group === 0) {
+      action = "fold";
+  } else {
+      if (pos === "E") {
+          if (group === 1 || group === 2) {
+              action = "raise"
+          } else {
+              action = "fold"
+          }
+      } else if (pos === "M") {
+          if (group === 1 || group === 2) {
+              action = "raise"
+          } else {
+              action = "fold"
+          }
+      } else {
+          if (group === 1 || group === 2) {
+              action = "raise"
+          } else {
+              action = "fold"
+          }
+      }
+  }
+  return action;
+}
+
 function isPair(gameState, player) {
   const id = gameState.in_action;
 
