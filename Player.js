@@ -1,5 +1,5 @@
 
-function isPair(gameState) {
+function isPair(gameState, player) {
   const id = gameState.in_action;
 
 
@@ -82,7 +82,7 @@ class Player {
 
     const allCards = getAllCards(player, gameState);
     // const callVal = callValue(player, current_buy_in);
-    const _isPair = isPair(gameState);
+    const _isPair = isPair(gameState, player);
     try {
 
 
