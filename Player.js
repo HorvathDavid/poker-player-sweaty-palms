@@ -48,25 +48,19 @@ class Player {
     const player = getOwnPlayer(gameState);
 
     const allCards = getAllCards(player, gameState);
-
     const callValue = callValue(player, current_buy_in);
     const _isPair = isPair(gameState);
 
 
     if (tempCards.includes(ourCards[0].rank) && tempCards.includes(ourCards[1].rank)) {
-      let betzor = current_buy_in - players.find(obj => obj.id == ourID).bet + minimum_raise;
-      return betCallback(Math.floor(betzor));
+      betValue = current_buy_in - players.find(obj => obj.id == ourID).bet + minimum_raise;
     }
-
-    let betValue = 0;
-
 
     if (_isPair) {
-      let betzor = current_buy_in - players.find(obj => obj.id == ourID).bet + minimum_raise;
-      return betCallback(Math.floor(betzor));
+      betValue = current_buy_in - players.find(obj => obj.id == ourID).bet + minimum_raise;
     }
 
-    betCallback(betValue);
+    betCallback(Math.floor(betValue));
   }
 
   static showdown(gameState) {
