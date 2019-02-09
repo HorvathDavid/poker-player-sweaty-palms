@@ -1,16 +1,12 @@
+const axios = require('axios');
+
 var a = {
     "tournament_id":"550d1d68cd7bd10003000003",     // Id of the current tournament
-
     "game_id":"550da1cb2d909006e90004b1",           // Id of the current sit'n'go game. You can use this to link a
-                                                    // sequence of game states together for logging purposes, or to
-                                                    // make sure that the same strategy is played for an entire game
-
     "round":0,                                      // Index of the current round within a sit'n'go
-
     "bet_index":0,                                  // Index of the betting opportunity within a round
-
     "small_blind": 10,                              // The small blind in the current round. The big blind is twice the
-                                                    //     small blind
+                                            //     small blind
 
     "current_buy_in": 320,                          // The amount of the largest current bet from any one player
 
@@ -91,4 +87,12 @@ var a = {
     ]
 }
 
-module.exports = a;
+const url = 'http://localhost:1337'
+axios.post(url, {
+    action: 'bet_request',
+    game_state: JSON.stringify(a)
+}).then(function (data) {
+    console.log(data);
+}).catch(function (err) {
+    console.log(err);
+});
