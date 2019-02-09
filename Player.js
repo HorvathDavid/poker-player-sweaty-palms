@@ -1,6 +1,6 @@
 
 function howManyRaiseHappendedInRoundBefore(gameState) {
-  
+
 }
 
 function ourPosition(gameState) {
@@ -36,23 +36,23 @@ function decision(group, pos) {
       }
     } else if (pos === "M") {
       if (group === 1 || group === 2) {
-          action = "raise";
-          raiseMultiplier = 3;
-        } else {
-          action = "raise";
-          raiseMultiplier = 1;
+        action = "raise";
+        raiseMultiplier = 3;
+      } else {
+        action = "raise";
+        raiseMultiplier = 1;
       }
     } else {
       if (group === 1 || group === 2) {
-          action = "raise";
-          raiseMultiplier = 3;
+        action = "raise";
+        raiseMultiplier = 3;
       } else {
-          action = "raise";
-          raiseMultiplier = 1;
+        action = "raise";
+        raiseMultiplier = 1;
       }
     }
   }
-  return {action, raiseMultiplier};
+  return { action, raiseMultiplier };
 }
 
 function isPair(gameState, player) {
@@ -257,22 +257,23 @@ class Player {
     const allCards = getAllCards(player, gameState);
     const _isPair = isPair(gameState, player);
 
-    const group = whichGroup(ourCards);    
+    const group = whichGroup(ourCards);
     const ourPos = ourPosition(gameState);
+
 
     const tempCards = ['10', 'J', 'Q', 'K', 'A'];
 
-    const {act, rm} = decision(group, ourPos);
+    const { action: act, raiseMultiplier: rm } = decision(group, ourPos);
 
     try {
 
       if (act === "raise") {
         betValue = current_buy_in - player.bet + rm * minimum_raise;
         // Ha betValue > pot/2, akkor fold - nem adjuk meg az all-int
-        if (betValue > player.stack/2) {
+        if (betValue > player.stack / 2) {
           if (group !== 1) {
             betValue = 0;
-          } 
+          }
         }
       }
       // if (tempCards.includes(ourCards[0].rank) && tempCards.includes(ourCards[1].rank)) {
