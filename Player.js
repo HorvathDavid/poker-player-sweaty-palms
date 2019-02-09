@@ -1,15 +1,15 @@
 
 function ourPosition(gameState) {
   const { dealer, players, in_action } = gameState;
-  let dealerPlayer = (dealer+1)%(players.length);
+  let dealerPlayer = (dealer + 1) % (players.length);
   let pos = (6 + (in_action - dealer)) % 6;
   let position = "E";
   if (pos === 1 || pos === 2) {
-      position = "L";
+    position = "L";
   } else if (pos === 5 || pos === 0) {
-      position = "M";
+    position = "M";
   } else {
-      position = "E"
+    position = "E"
   }
   return position;
 }
@@ -17,29 +17,29 @@ function ourPosition(gameState) {
 function decision(group, pos) {
   let action = "fold";
   if (group > 4) {
-      action = "fold";
+    action = "fold";
   } else if (group === 0) {
-      action = "fold";
+    action = "fold";
   } else {
-      if (pos === "E") {
-          if (group === 1 || group === 2) {
-              action = "raise"
-          } else {
-              action = "fold"
-          }
-      } else if (pos === "M") {
-          if (group === 1 || group === 2) {
-              action = "raise"
-          } else {
-              action = "fold"
-          }
+    if (pos === "E") {
+      if (group === 1 || group === 2) {
+        action = "raise"
       } else {
-          if (group === 1 || group === 2) {
-              action = "raise"
-          } else {
-              action = "fold"
-          }
+        action = "fold"
       }
+    } else if (pos === "M") {
+      if (group === 1 || group === 2) {
+        action = "raise"
+      } else {
+        action = "fold"
+      }
+    } else {
+      if (group === 1 || group === 2) {
+        action = "raise"
+      } else {
+        action = "fold"
+      }
+    }
   }
   return action;
 }
@@ -69,6 +69,10 @@ function getAllCards(player, gameState) {
   return [...hole_cards, ...community_cards];
 }
 
+function suited(cards) {
+  return cards[0].suit === cards[1].suit;
+}
+
 function whichGroup(cards) {
 
   // "hole_cards": [                         // The cards of the player. This is only visible for your own player
@@ -82,7 +86,7 @@ function whichGroup(cards) {
   //     "suit": "spades"
   //   }
   // ]
-
+  const isSuited = suited(cards);
   const ourCards = cards.map(c => c.rank);
 
   let group = 0;
@@ -94,7 +98,9 @@ function whichGroup(cards) {
       ['Q', 'Q'],
       ['J', 'J']
     ],
-    suited: [['A', 'K']]
+    suited: [
+      ['A', 'K']
+    ]
   };
 
   const g2 = {
@@ -139,6 +145,42 @@ function whichGroup(cards) {
   };
 
   if (ourCards) {
+
+    // suited cards list test
+    if (isSuited) {
+      // check g1
+      for (const pairs of g1.suited) {
+        if (JSON.stringify(pairs.sort()) === JSON.stringify(ourCards.sort())) {
+          group = 1;
+          return group;
+        }
+      }
+
+      // check g2
+      for (const pairs of g2.suited) {
+        if (JSON.stringify(pairs.sort()) === JSON.stringify(ourCards.sort())) {
+          group = 2;
+          return group;
+        }
+      }
+
+      // check g3
+      for (const pairs of g3.suited) {
+        if (JSON.stringify(pairs.sort()) === JSON.stringify(ourCards.sort())) {
+          group = 3;
+          return group;
+        }
+      }
+
+      // check g4
+      for (const pairs of g4.suited) {
+        if (JSON.stringify(pairs.sort()) === JSON.stringify(ourCards.sort())) {
+          group = 4;
+          return group;
+        }
+      }
+    }
+
     // check g1
     for (const pairs of g1.norm) {
       if (JSON.stringify(pairs.sort()) === JSON.stringify(ourCards.sort())) {
@@ -170,6 +212,7 @@ function whichGroup(cards) {
         return group;
       }
     }
+
   }
 
   return group;
