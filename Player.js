@@ -361,7 +361,7 @@ class Player {
         betValue = current_buy_in - player.bet + rm * minimum_raise;
         // Ha betValue > pot/2, akkor fold - nem adjuk meg az all-int
         if (betValue > player.stack / 2) {
-          if (group !== 1) {
+          if (group !== 1 && group !== 2) {
             betValue = 0;
           }
         }
