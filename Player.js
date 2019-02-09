@@ -233,6 +233,7 @@ class Player {
       pot,
       community_cards
     } = gameState;
+
     let betValue = 0;
 
     const player = getOwnPlayer(gameState);
@@ -240,18 +241,25 @@ class Player {
     const allCards = getAllCards(player, gameState);
     const _isPair = isPair(gameState, player);
 
-    const group = whichGroup(ourCards);
+    const group = whichGroup(ourCards);    
+    const ourPos = ourPosition(gameState);
 
     const tempCards = ['10', 'J', 'Q', 'K', 'A'];
 
-    try {
-      if (tempCards.includes(ourCards[0].rank) && tempCards.includes(ourCards[1].rank)) {
-        betValue = current_buy_in - player.bet + minimum_raise;
-      }
+    const act = decision(group, ourPos);
 
-      if (_isPair) {
+    try {
+
+      if (act === "raise") {
         betValue = current_buy_in - player.bet + minimum_raise;
       }
+      // if (tempCards.includes(ourCards[0].rank) && tempCards.includes(ourCards[1].rank)) {
+      //   betValue = current_buy_in - player.bet + minimum_raise;
+      // }
+
+      // if (_isPair) {
+      //   betValue = current_buy_in - player.bet + minimum_raise;
+      // }
 
     } catch (error) {
       console.log(error);
