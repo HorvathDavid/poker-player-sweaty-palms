@@ -320,16 +320,33 @@ class Player {
       const grouped = _.groupBy(allCards, function (o) {
         return o.rank;
       });
-      
+
       let maxOfSame = 0;
       for (const key of Object.keys(grouped)) {
-        if (grouped[key].length > maxOfSame) { 
+        if (grouped[key].length > maxOfSame) {
           maxOfSame = grouped[key].length;
         }
       }
-      
+
       // console.log(maxOfSame)
-      
+      // 5 egyforma
+      let maxOfSameColor = 0;
+      const groupedColor = _.groupBy(allCards, function (o) {
+        return o.suit;
+      });
+      for (const key of Object.keys(groupedColor)) {
+        if (groupedColor[key].length > maxOfSameColor) {
+          maxOfSameColor = groupedColor[key].length;
+        }
+      }
+
+      if (maxOfSameColor > 4) {
+        betValue = player.stack;
+
+        console.log('maxOfSameColor', maxOfSameColor);
+
+        return betCallback(Math.floor(betValue));
+      }
 
       if (maxOfSame > 2) {
         betValue = player.stack;
