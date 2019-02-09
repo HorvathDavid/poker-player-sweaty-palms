@@ -43,15 +43,34 @@ class Player {
       community_cards
     } = gameState;
     let betValue = 0;
-    let tempCards = ['10', 'J', 'Q', 'K', 'A'];
+
+    const tempCards = ['10', 'J', 'Q', 'K', 'A'];
+    // const g1 = ['A', 'A']
+    // const g1 = ['K', 'K']
+    // const g1 = ['Q', 'Q']
+    // const g1 = ['J', 'J']
+    // const gc1 = ['A', 'K'] // color
+
+    // const g2 = ['10', '10']
+    // const g2 = ['A', 'Q'] // suited
+    // const g2 = ['A', 'J']  // suited
+    // const g2 = ['Q', 'K'] // suited
+    // const g2 = ['A', 'K']
+
+    // const g3 = ['10', '10']
+    // const g3 = ['A', 'Q'] // suited
+    // const g3 = ['A', 'J']  // suited
+    // const g3 = ['Q', 'K'] // suited
+    // const g3 = ['A', 'K']
+
     const player = getOwnPlayer(gameState);
 
+    try {
 
     const allCards = getAllCards(player, gameState);
     const callValue = callValue(player, current_buy_in);
     const _isPair = isPair(gameState);
 
-    try {
       if (tempCards.includes(ourCards[0].rank) && tempCards.includes(ourCards[1].rank)) {
         betValue = current_buy_in - player.bet + minimum_raise;
       }
