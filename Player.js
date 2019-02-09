@@ -1,4 +1,10 @@
 
+function numberOfFolds(gameState) {
+  const { players, in_action } = gameState;
+
+  return players.filter(e => e.status === 'folded' && in_action !== e.id).length;
+}
+
 function numberOfBetOnOtherPlayers(gameState) {
   const { players, in_action } = gameState;
   return players.filter(e => e.bet > 0 && in_action !== e.id).length;
@@ -6,16 +12,52 @@ function numberOfBetOnOtherPlayers(gameState) {
 
 function ourPosition(gameState) {
   const { dealer, players, in_action } = gameState;
-  let dealerPlayer = (dealer + 1) % (players.length);
-  let pos = (6 + (in_action - dealer)) % 6;
+
+  const playerIndexesAbs = players.filter(p => p.status !== 'out').map(p => p.id);
+
+  let pos = (playerIndexesAbs.length + (playerIndexesAbs.indexOf(in_action) - playerIndexesAbs.indexOf(dealer))) % playerIndexesAbs.length;
+
   let position = "E";
-  if (pos === 1 || pos === 2) {
-    position = "L";
-  } else if (pos === 5 || pos === 0) {
-    position = "M";
-  } else {
-    position = "E"
+
+  if (playerIndexesAbs.length === 6) {
+    if (pos === 1 || pos === 2) {
+      position = "L";
+    } else if (pos === 3 || pos === 4) {
+      position = "E";
+    } else {
+      position = "M";
+    }
+  } else if (playerIndexesAbs.length === 5) {
+    if (pos === 1 || pos === 2) {
+      position = "L";
+    } else if (pos === 3 || pos === 4) {
+      position = "E";
+    } else {
+      position = "M";
+    }
+  } else if (playerIndexesAbs.length === 4) {
+    if (pos === 1 || pos === 2) {
+      position = "L";
+    } else if (pos === 3) {
+      position = "E";
+    } else {
+      position = "M";
+    }
+  } else if (playerIndexesAbs.length === 3) {
+    if (pos === 2) {
+      position = "L";
+    } else if (pos === 0) {
+      position = "E";
+    } else {
+      position = "M";
+    }
+  } else if (playerIndexesAbs.length === 2) {
+    position = "E";
   }
+
+
+
+  // console.log('position', pos)
   return position;
 }
 
@@ -278,10 +320,12 @@ class Player {
 
     const numberOfBets = numberOfBetOnOtherPlayers(gameState);
     const { action: act, raiseMultiplier: rm } = decision(group, ourPos, numberOfBets);
+
     // console.log('numberOfBets', numberOfBets);
     // console.log('ourPos', ourPos);
     // console.log('group', group);
     // console.log(act, rm);
+    // console.log('ourPos', ourPos);
 
     try {
 
