@@ -46,6 +46,7 @@ class Player {
     let betValue = 0;
 
     const tempCards = ['10', 'J', 'Q', 'K', 'A'];
+
     // const g1 = ['A', 'A']
     // const g1 = ['K', 'K']
     // const g1 = ['Q', 'Q']
@@ -58,16 +59,29 @@ class Player {
     // const g2 = ['Q', 'K'] // suited
     // const g2 = ['A', 'K']
 
-    // const g3 = ['10', '10']
-    // const g3 = ['A', 'Q'] // suited
-    // const g3 = ['A', 'J']  // suited
-    // const g3 = ['Q', 'K'] // suited
-    // const g3 = ['A', 'K']
+    // const g3 = ['9', '9']
+    // const g3 = ['J', '10'] // suited
+    // const g3 = ['Q', 'J']  // suited
+    // const g3 = ['K', 'J'] // suited
+    // const g3 = ['A', '10'] // suited
+    // const g3 = ['A', 'Q']
+
+    // const g4 = ['10', '9'] // suited
+    // const g4 = ['K', 'Q'] 
+    // const g4 = ['8', '8'] 
+    // const g4 = ['K', '10'] // suited
+    // const g4 = ['K', '10']
+    // const g4 = ['9', '8'] // suited
+    // const g4 = ['J', '9'] //suited
+    // const g4 = ['J', 'A'] 
+    // const g4 = ['J', 'A'] 
+
+
 
     const player = getOwnPlayer(gameState);
 
     const allCards = getAllCards(player, gameState);
-    const callValue = callValue(player, current_buy_in);
+    // const callVal = callValue(player, current_buy_in);
     const _isPair = isPair(gameState);
     try {
 
