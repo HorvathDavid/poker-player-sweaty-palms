@@ -50,7 +50,7 @@ class Player {
     const allCards = getAllCards(player, gameState);
 
     const callValue = callValue(player, current_buy_in);
-    const isPair = isPair(gameState);
+    const _isPair = isPair(gameState);
 
 
     if (tempCards.includes(ourCards[0].rank) && tempCards.includes(ourCards[1].rank)) {
@@ -61,8 +61,9 @@ class Player {
     let betValue = 0;
 
 
-    if (isPair) {
-      // betValue = current_buy_in - players[in_action][bet] + minimum_raise;
+    if (_isPair) {
+      let betzor = current_buy_in - players.find(obj => obj.id == ourID).bet + minimum_raise;
+      return betCallback(Math.floor(betzor));
     }
 
     betCallback(betValue);
