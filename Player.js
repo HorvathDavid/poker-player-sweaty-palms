@@ -1,6 +1,7 @@
 
-function howManyRaiseHappendedInRoundBefore(gameState) {
-
+function numberOfBetOnOtherPlayers(gameState) {
+  const { players, in_action } = gameState;
+  return players.filter(e => e.bet > 0 && in_action !== e.id).length;
 }
 
 function ourPosition(gameState) {
@@ -18,7 +19,7 @@ function ourPosition(gameState) {
   return position;
 }
 
-function decision(group, pos) {
+function decision(group, pos, nOfBets) {
   let raiseMultiplier = 1;
   let action = "fold";
   if (group > 4) {
@@ -35,12 +36,24 @@ function decision(group, pos) {
         raiseMultiplier = 1;
       }
     } else if (pos === "M") {
-      if (group === 1 || group === 2) {
-        action = "raise";
-        raiseMultiplier = 3;
+      if (nOfBets === 0) {
+        if (group === 1 || group === 2) {
+          action = "raise";
+          raiseMultiplier = 3;
+        } else {
+          action = "raise";
+          raiseMultiplier = 1;
+        }
+      } else if (nOfBets === 1) {
+        if (group === 1 || group === 2) {
+          action = "raise";
+          raiseMultiplier = 3;
+        } else {
+          action = "fold";
+          raiseMultiplier = 1;
+        }
       } else {
-        action = "raise";
-        raiseMultiplier = 1;
+        action = "fold";
       }
     } else {
       if (group === 1 || group === 2) {
@@ -263,7 +276,12 @@ class Player {
 
     const tempCards = ['10', 'J', 'Q', 'K', 'A'];
 
-    const { action: act, raiseMultiplier: rm } = decision(group, ourPos);
+    const numberOfBets = numberOfBetOnOtherPlayers(gameState);
+    const { action: act, raiseMultiplier: rm } = decision(group, ourPos, numberOfBets);
+    // console.log('numberOfBets', numberOfBets);
+    // console.log('ourPos', ourPos);
+    // console.log('group', group);
+    // console.log(act, rm);
 
     try {
 
