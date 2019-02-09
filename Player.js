@@ -1,6 +1,6 @@
 class Player {
   static get VERSION() {
-    return '0.21';
+    return '0.22';
   }
 
   static betRequest(gameState, bet) {
@@ -12,7 +12,7 @@ class Player {
     let ourCards = players.find(obj => obj.id == ourID).hole_cards;
     
     if (tempCards.includes(ourCards[0].rank) && tempCards.includes(ourCards[1].rank)) {
-      let betzor = current_buy_in - players.in_action.bet + minimum_raise;
+      let betzor = current_buy_in - players.find(obj => obj.id == ourID).bet + minimum_raise;
       bet(Math.floor(betzor));
     }
 
